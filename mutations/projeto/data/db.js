@@ -3,36 +3,41 @@ function proximoID() {
   return id++;
 }
 
+let idPerfil = 1;
+function proximoPerfilID() {
+  return idPerfil++;
+}
+
 const perfis = [
-  { id: 1, nome: 'comum' },
-  { id: 2, nome: 'administrador' },
+  { id: proximoPerfilID(), nome: "comum" },
+  { id: proximoPerfilID(), nome: "administrador" },
 ];
 
 const usuarios = [
   {
     id: proximoID(),
-    nome: 'João Silva',
-    email: 'jsilva@zemail.com',
+    nome: "João Silva",
+    email: "jsilva@zemail.com",
     idade: 29,
     perfil_id: 1,
-    status: 'ATIVO',
+    status: "ATIVO",
   },
   {
     id: proximoID(),
-    nome: 'Rafael Junior',
-    email: 'rafajun@wemail.com',
+    nome: "Rafael Junior",
+    email: "rafajun@wemail.com",
     idade: 31,
     perfil_id: 2,
-    status: 'INATIVO',
+    status: "INATIVO",
   },
   {
     id: proximoID(),
-    nome: 'Daniela Smith',
-    email: 'danismi@umail.com',
+    nome: "Daniela Smith",
+    email: "danismi@umail.com",
     idade: 24,
     perfil_id: 1,
-    status: 'BLOQUEADO',
+    status: "BLOQUEADO",
   },
 ];
 
-module.exports = { usuarios, perfis, proximoID };
+module.exports = { usuarios, perfis, proximoID, proximoPerfilID };
