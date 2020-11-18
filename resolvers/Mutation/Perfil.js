@@ -1,20 +1,38 @@
-const { perfis, proximoPerfilID } = require("../../data/db");
+const db = require('../../config/db');
+const { perfil: obterPerfil } = require('../Query/perfil');
+
 module.exports = {
-  novoPerfil(_, { nome }) {
-    const novo = { id: proximoPerfilID(), nome: nome };
-    perfis.push(novo);
-    return novo;
+  async novoPerfil(_, { dados }) {
+    try {
+      const [id] = await db('perfis').insert(dados);
+      return db('perfis').where({ id }).first();
+    } catch (e) {
+      throw new Error(e.sqlMessage);
+    }
   },
-  alterarPerfil(_, { id, nome }) {
-    const i = perfis.findIndex((p) => p.id === id);
-    if (i < 0) return;
-    perfis[i].nome = nome;
-    return perfis[i];
+  async excluirPerfil(_, args) {
+    try {
+      const perfil = await obterPerfil(_, args);
+      if (perfil) {
+        const { id } = perfil;
+        await db('usuarios_perfis').where({ perfil_id: id }).delete();
+        await db('perfis').where({ id }).delete();
+      }
+      return perfil;
+    } catch (e) {
+      throw new Error(e.sqlMessage);
+    }
   },
-  deletarPerfil(_, { id }) {
-    const i = perfis.findIndex((p) => p.id === id);
-    if (i < 0) return;
-    const removido = perfis.splice(i, 1);
-    return removido[0];
+  async alterarPerfil(_, { filtro, dados }) {
+    try {
+      const perfil = await obterPerfil(_, { filtro });
+      if (perfil) {
+        const { id } = perfil;
+        await db('perfis').where({ id }).update(dados);
+      }
+      return { ...perfil, ...dados };
+    } catch (e) {
+      throw new Error(e.sqlMessage);
+    }
   },
 };

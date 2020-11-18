@@ -3,15 +3,15 @@
 module.exports = {
   client: 'mysql',
   connection: {
-    database: 'exercicios',
-    user: 'root',
-    password: '12345678',
+    database: 'projeto-final',
+    user:     'root',
+    password: '12345678'
   },
   pool: {
     min: 2,
-    max: 10,
+    max: 10
   },
   migrations: {
-    tableName: 'knex_migrations',
-  },
+    tableName: 'knex_migrations'
+  }
 };
