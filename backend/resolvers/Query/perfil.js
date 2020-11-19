@@ -2,7 +2,7 @@ const { ValidationContext } = require('graphql');
 const db = require('../../config/db');
 
 module.exports = {
-  perfis(_, _, ctx) {
+  perfis(parent, args, ctx) {
     ctx && ctx.validarAdmin();
     return db('perfis');
   },

@@ -18,7 +18,7 @@ module.exports = {
 
     return getUsuarioLogado(usuario);
   },
-  usuarios(_, _, ctx) {
+  usuarios(parent, args, ctx) {
     ctx && ctx.validarAdmin();
     return db('usuarios');
   },
