@@ -13,13 +13,13 @@ input UsuarioInput {
   perfis: [PerfilFiltro]
 }
 
-input UsuarioLoginInput {
+input UsuarioRegistrarInput {
+  nome: String!
   email: String!
   senha: String!
 }
 
-input UsuarioRegistrarInput {
-  nome: String!
+input UsuarioLoginInput {
   email: String!
   senha: String!
 }

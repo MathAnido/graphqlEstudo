@@ -13,14 +13,17 @@ const mutations = {
       },
     });
   },
-
   async novoUsuario(_, { dados }, ctx) {
     ctx && ctx.validarAdmin();
     try {
       const idsPerfis = [];
 
-      if (!dados.perfis || !dados.perfis.lenght) {
-        dados.perfis = [{ nome: 'comum' }];
+      if (!dados.perfis || !dados.perfis.length) {
+        dados.perfis = [
+          {
+            nome: 'comum',
+          },
+        ];
       }
 
       for (let filtro of dados.perfis) {
@@ -30,6 +33,7 @@ const mutations = {
         if (perfil) idsPerfis.push(perfil.id);
       }
 
+      // criptografar a senha
       const salt = bcrypt.genSaltSync();
       dados.senha = bcrypt.hashSync(dados.senha, salt);
 
@@ -61,7 +65,6 @@ const mutations = {
   },
   async alterarUsuario(_, { filtro, dados }, ctx) {
     ctx && ctx.validarUsuarioFiltro(filtro);
-
     try {
       const usuario = await obterUsuario(_, { filtro });
       if (usuario) {
@@ -84,6 +87,7 @@ const mutations = {
         }
 
         if (dados.senha) {
+          // criptografar a senha
           const salt = bcrypt.genSaltSync();
           dados.senha = bcrypt.hashSync(dados.senha, salt);
         }
@@ -98,4 +102,4 @@ const mutations = {
   },
 };
 
-module.exports = { ...mutations };
+module.exports = mutations;
